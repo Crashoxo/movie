@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BigHero6</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/bigHero6.css" />
+</head>
+
+<body>
+  <!-- checkbox是因為要讓他可以取消點選 -->
+  <input type="checkbox" id="side-menu-switch" />
+  <div class="side-menu">
+    <!-- 以下右邊搜尋 -->
+    <div class="side-search">
+      <div class="side-search-wrapper">
+        <div class="side-search-input">
+          <a href="" target="_blank" hidden></a>
+          <input class="side-input-text" type="text" placeholder="Type to search.." />
+          <div class="side-autocom-box">
+            <!-- here list are inserted from javascript -->
+          </div>
+          <div class="icon"><i class="fas fa-search"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <nav>
+      <a class="side-select" href="">&ensp;<i class="fa fa-solid fa-film"></i>
+        最新電影
+      </a>
+      <a class="side-select" href="">&ensp;<i class="fa fa-solid fa-film"></i>
+        熱門推薦
+      </a>
+      <a class="side-select" href="">&ensp;<i class="fa fa-solid fa-film"></i>
+        About Us
+      </a>
+      <a class="side-select" href="">&ensp;<i class="fa fa-solid fa-film"></i>
+        SIGN IN
+      </a>
+    </nav>
+    <!-- label把i包起來,這個i是可以呼叫id="side-menu-switch"的 -->
+    <label for="side-menu-switch">
+      <i class="fa-solid fa-angles-right"></i>
+    </label>
+  </div>
+  <div class="nav-bar">
+    <div class="logo"><i class="fa-solid fa-paw"></i>&ensp;LOGO</div>
+
+    <div class="top-search">
+      <div class="top-search-wrapper">
+        <div class="search-input">
+          <a href="" target="_blank" hidden></a>
+          <input class="top-input-text" type="text" placeholder="Type to search.." />
+          <div class="autocom-box">
+            <!-- here list are inserted from javascript -->
+          </div>
+          <div class="icon"><i class="fas fa-search"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sign-in"><i class="fa-solid fa-circle-user"></i>&ensp;SIGN IN</div>
+  </div>
+
+  <div class="slideshow">
+    <div class="slideshow-left-detail">
+      <div class="slideshow-context-title">
+        大英雄天團
+        <br />
+        Big Hero 6
+      </div>
+      <div class="slideshow-context-like">★★★★★</div>
+      <div class="slideshow-context-introduce">
+        <p class="slideshow-context-p">
+          《大英雄天團》改編自漫威於1998年出版的同名漫畫。故事發生在一個虛構的未來混合大都市「舊京山」，14歲發明天才少年濱田廣的最新發明「微型機器人」，竟然令他捲入足以摧毀舊京山的巨大陰謀！孤立無援，阿廣只能藉助一班另類勢力，由宅宅實驗室裡四個哥哥的朋友包括芥末無薑、化學天才哈妮蕾夢、單車信差神行蛋葆、宅男漫畫迷費吉拉及醫護機器人杯麵。阿廣為朋友和自己配上了高科技超級裝備，6人組成了能力非凡的「大英雄天團」。阿廣在同為發明家的哥哥濱田正去世之後，與哥哥生前發明的醫療用機器人－杯麵成了好朋友。然而，他發現哥哥當時的死因並不單純，為了阻止黑暗勢力，阿廣與機器人杯麵，連同幾位富有正義感的夥伴們組成聯盟，阿廣也運用了他的科技頭腦，為團員們設計一系列的武器配備，共同伸張正義。
+        </p>
+      </div>
+      <div class="slideshow-context-more">
+        <button type="button" class="slideshow-context-button">&ensp;Watch More&ensp;</button>
+      </div>
+    </div>
+    <div class="slideshow-context"></div>
+    <div id="buttons" class="slideshow-right-button">
+      <button class="slideshow-background-button" type="button"
+        onclick="backgroundImg(0)">1</button>
+      <button class="slideshow-background-button" type="button"
+        onclick="backgroundImg(1)">2</button>
+      <button class="slideshow-background-button" type="button"
+        onclick="backgroundImg(2)">3</button>
+      <button class="slideshow-background-button" type="button"
+        onclick="backgroundImg(3)">4</button>
+      <button class="slideshow-background-button" type="button"
+        onclick="backgroundImg(4)">5</button>
+    </div>
+  </div>
+
+  <div class="show-youtube-outside">
+    <iframe class="show-youtube" src="https://www.youtube.com/embed/nds0teAB5Ig?start=93" title="YouTube video player"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+  </div>
+  </div>
+
+  </div>
+
+
+  </div>
+
+  <div class="featured-movie">
+    <div class="featured-movie-inside-width featured-bg1">
+      <div class="featured-movie-inside-context">
+        <div class="featured-movie-like">★★★★★</div>
+        <div class="featured-movie-title">腦筋急轉彎
+          <br>
+          Inside Out
+        </div>
+        <div class="featured-movie-introduce">
+          <p class="featured-movie-introduce-p">
+            主角萊莉·安德森出生於美國明尼蘇達州，在她腦中有五種情緒表現形式：快樂、憂愁、厭惡、恐懼和憤怒，這五種擬人化的情緒在萊莉的大腦總部中透過一個控制台影響萊莉的行為和記憶。而記憶被儲存在彩色水晶球內，其中最重要的五顆快樂核心記憶存放在總部樞紐，各維持著一座塑造萊莉性格的個性島嶼。
+          </p>
+        </div>
+        <div class="featured-movie-more">
+          <div class="featured-movie-more">
+            <button class="featured-movie-button" type="button"><a href="./InsideOut.html">&ensp;Watch
+                More&ensp;</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="featured-movie-inside-width featured-bg2">
+      <div class="featured-movie-inside-context">
+        <div class="featured-movie-like">★★★★★</div>
+        <div class="featured-movie-title">羅根
+          <br>
+          Logan
+        </div>
+        <div class="featured-movie-introduce">
+          <p class="featured-movie-introduce-p">
+            窮途末路的皮爾斯釋出X-24，剛想趁他跟羅根與蘿拉惡戰時開車逃跑，但變種小孩集體用各自的能力將皮爾斯殺死並活埋。當羅根被重傷後，蘿拉拿槍發射出羅根隨身多年的的亞德曼金屬製子彈才殺死X-24。臨死前的羅根在蘿拉陪伴下，首次體驗到家人陪伴以及做父親的感覺後安詳離世，結束他悲壯漫長的一生。最後，蘿拉和夥伴們將羅根埋葬在湖邊，蘿拉引用電影《原野奇俠》裡的對白作為悼念詞後，大家便繼續上路穿越邊境。對父親戀戀不捨的蘿拉，走前將羅根墓前的十字架放置成X狀，藉此永遠紀念她的父親，並是最後一位X戰警。
+          </p>
+        </div>
+        <div class="featured-movie-more">
+          <div class="featured-movie-more">
+            <button class="featured-movie-button" type="button"><a href="./Logan.html">&ensp;Watch
+                More&ensp;</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="featured-movie-inside-width featured-bg3">
+      <div class="featured-movie-inside-context">
+        <div class="featured-movie-like">★★★★★</div>
+        <div class="featured-movie-title">靈魂急轉彎
+          <br>
+          Soul
+        </div>
+        <div class="featured-movie-introduce">
+          <p class="featured-movie-introduce-p">
+            頓悟後的喬再度彈起鋼琴，使自己的靈魂進入忘我領域，在此與月風重逢。月風告訴喬，22號由於體驗過人生有了執著，已經變成迷失靈魂，兩人嘗試將22號追回，但失控的22號能力強大，不僅擊沉月風的船隻，更撞進人生研討會大鬧，過程中喬意外被22號吞噬。在22號體內，喬目睹無數22號過去的導師的幻影，不斷用惡毒的言語辱罵22號，喬拿出幻化的楓樹種子破除幻影，在兩人意識交流中，喬告訴22號火花並非是特定的人生目標，而是當你準備好活出人生時便能獲得，受到鼓舞的22號因此回復原狀。塵埃落定後，喬將通行證歸還予22號，讓其能順利前往地球展開新人生，22號出發前帶有一絲猶疑，喬雖然明白自己會被送回，仍陪伴22號走完最後一程，而22號於落下地球途中與喬默默道別。喬按照原先安排將被送往作古畢業班，此時傑瑞出現，感謝喬的努力激勵了他們所有人，傑瑞藉著偷撥泰瑞計算靈魂數字的算盤，讓喬得以離開作古畢業班，擁有重返人生的機會，在臨行前傑瑞詢問喬會怎麼度過人生，喬表示自己往後將珍惜生活中的每分每秒。
+          </p>
+        </div>
+        <div class="featured-movie-more">
+          <div class="featured-movie-more">
+            <button class="featured-movie-button" type="button"><a href="./Soul.html">&ensp;Watch
+                More&ensp;</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="featured-movie-inside-width featured-bg4">
+      <div class="featured-movie-inside-context">
+        <div class="featured-movie-like">★★★★★</div>
+        <div class="featured-movie-title">大英雄天團
+          <br>
+          Big Hero 6
+        </div>
+        <div class="featured-movie-introduce">
+          <p class="featured-movie-introduce-p">
+            《大英雄天團》改編自漫威於1998年出版的同名漫畫。故事發生在一個虛構的未來混合大都市「舊京山」，14歲發明天才少年濱田廣的最新發明「微型機器人」，竟然令他捲入足以摧毀舊京山的巨大陰謀！孤立無援，阿廣只能藉助一班另類勢力，由宅宅實驗室裡四個哥哥的朋友包括芥末無薑、化學天才哈妮蕾夢、單車信差神行蛋葆、宅男漫畫迷費吉拉及醫護機器人杯麵。阿廣為朋友和自己配上了高科技超級裝備，6人組成了能力非凡的「大英雄天團」。阿廣在同為發明家的哥哥濱田正去世之後，與哥哥生前發明的醫療用機器人－杯麵成了好朋友。然而，他發現哥哥當時的死因並不單純，為了阻止黑暗勢力，阿廣與機器人杯麵，連同幾位富有正義感的夥伴們組成聯盟，阿廣也運用了他的科技頭腦，為團員們設計一系列的武器配備，共同伸張正義。
+          </p>
+        </div>
+        <div class="featured-movie-more">
+          <div class="featured-movie-more">
+            <button class="featured-movie-button" type="button"><a href="./BigHero6.html">&ensp;Watch
+                More&ensp;</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actor-title">主要演員
+    Main Character</div>
+  <div>
+    <div class="actor-context-photo">
+      <div class="actor-photo-1"><img src="./image/BigHero6/BigHero6-character1.jpg" alt=""></div>
+      <div class="actor-photo-3"><img src="./image/BigHero6/BigHero6-character2.jpg" alt=""></div>
+      <div class="actor-photo-2"><img src="./image/BigHero6/BigHero6-character3.jpg" alt=""></div>
+      <div class="actor-photo-4"><img src="./image/BigHero6/BigHero6-character4.jpg" alt=""></div>
+    </div>
+    <div class="actor-context-name">
+      <div class="actor-name-1">阿廣（Hiro）</div>
+      <div class="actor-name-2">阿正（Tadashi）</div>
+      <div class="actor-name-3">杯麵（Baymax）</div>
+      <div class="actor-name-4">蛋葆（Go Go）</div>
+    </div>
+  </div>
+  <footer>
+    <div class="go-top"><a href="#top">Top</a></div>
+    <div class="footer-socials">
+      <div class="footer-context-social">
+        <a href=""><i class="fa-brands fa-facebook"></i></a>
+      </div>
+      <div class="footer-context-social">
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+      </div>
+      <div class="footer-context-social">
+        <a href=""><i class="fa-brands fa-twitter-square"></i></a>
+      </div>
+      <div class="footer-context-social">
+        <a href=""><i class="fa-brands fa-twitch"></i></a>
+      </div>
+    </div>
+    <div class="footer-context">
+      <div>Conditions of Use</div>
+      <div>Privacy & Policy</div>
+      <div>Press Room</div>
+    </div>
+    <div class="footer-right">© 2021 MovieBox by Adriana Eka Prayudha</div>
+  </footer>
+  <script type="module">
+    import { allDomArray, checkEvent, changeStatus } from "./js/letSideSlide.js";
+    import { sideRelease } from "./js/getSideSearchDom.js";
+    import { topRelease } from "./js/getTopSearchDom.js";
+    import { backgroundImg, changeBackgroundImage } from "./js/changeSlideShowPhoto.js";
+
+    document.querySelector("#side-menu-switch").addEventListener("click", checkEvent);
+    allDomArray.forEach(function (item, index) {
+      item = item.addEventListener("click", changeStatus);
+    });
+
+    const sideInput = document.querySelector(".side-search-input");
+    sideInput.querySelector("input").addEventListener("keyup", sideRelease);
+
+    const topInput = document.querySelector(".search-input");
+    topInput.querySelector("input").addEventListener("keyup", topRelease);
+
+    window.backgroundImg = backgroundImg;
+    changeBackgroundImage();
+  </script>
+</body>
+
+</html>

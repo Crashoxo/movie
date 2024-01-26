@@ -1,0 +1,914 @@
+$primary: #248bf1;
+@mixin flexGroup($flexDirection, $justifyContent, $alignItems: false) {
+  display: flex;
+  flex-direction: $flexDirection; // 主軸方向
+  justify-content: $justifyContent; // 排列方式
+  // 副軸
+  @if $alignItems {
+    align-items: center;
+  }
+}
+
+@mixin backgroundImageStyle($attachment, $notRepeat: false) {
+  background-position: center;
+  background-size: cover;
+  background-attachment: $attachment;
+  // 預設repeat
+  @if $notRepeat {
+    background-repeat: no-repeat;
+  }
+}
+
+// 限制字數
+@mixin lineClamp($limitSentence) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $limitSentence;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+@mixin imgFit($objectFit) {
+  // 須一起使用
+  object-fit: $objectFit;
+  width: 100%;
+  height: 100%;
+}
+
+// https://ithelp.ithome.com.tw/articles/10244301
+// https://wall.alphacoders.com/big.php?i=215355&lang=Chinese
+* {
+  margin: 0;
+  padding: 0;
+  // font-size: 16px;
+  box-sizing: border-box;
+}
+
+body {
+  @include backgroundImageStyle(fixed, $notRepeat: false);
+  background-image: url("../image/Cyberpunk-featured-movie-bg.jpg");
+}
+
+.side-menu {
+  @include flexGroup(column, flex-start, $alignItems: false);
+  width: 300px;
+  height: 100vh;
+  background-color: #000000d0;
+  /* 使表單變成一欄 */
+  /* 影子 */
+  box-shadow: 10px 0px 10px rgb(51, 51, 51);
+
+  position: fixed;
+  /* X軸移動 起始 - 往左 先收起 */
+  transform: translateX(-100%);
+  /* 轉場效果0.5秒 */
+  transition: 0.3s all linear;
+}
+
+// ----------------------------- 以下 左邊搜尋列
+
+.side-search-wrapper {
+  max-width: 450px;
+  width: 90%;
+  margin: 50px auto;
+}
+.side-search-wrapper .side-search-input {
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.12);
+}
+.side-search-input .side-input-text {
+  background-color: transparent;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+// 當class內有side-search-input 及 active
+// 子元素side-input-text 以下效果
+.side-search-input.active .side-input-text {
+  border-radius: 5px 5px 0 0;
+}
+
+// 選單顯示方式
+.side-search-input .side-autocom-box {
+  transition: 0.2s all linear; // 動畫消失
+  background-color: rgba(255, 255, 255, 0.432);
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.side-search-input.active .side-autocom-box {
+  transition: 0.3s all linear; // 動畫顯示
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-autocom-box li {
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+
+.side-search-input.active .side-autocom-box li {
+  display: block;
+}
+
+.side-autocom-box li:hover {
+  background: #000000;
+  color: #fff;
+}
+.side-search-input .icon {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  height: 40px;
+  line-height: 40px;
+  width: 55px;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+// ----------------------------- 以下左邊拉出選單
+
+.side-menu label {
+  /* 對齊父層position: relative; */
+  position: absolute;
+  width: 30px;
+  height: 80px;
+  background-color: #000;
+  color: #fff;
+
+  /* 垂直置中 */
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  right: -30px;
+
+  /* 使文字內容置中 */
+  text-align: center;
+  /* 但擠不下 */
+
+  /* 所以 */
+  font-size: 24px;
+  /* 文字上下分配高度 */
+  line-height: 80px;
+  /* 變圓形 */
+  border-radius: 0 10px 10px 0;
+}
+#side-menu-switch {
+  /* radio消失 */
+  display: none;
+}
+/* #side-menu-switch下面一層的side-menu */
+/* 打開原狀 */
+#side-menu-switch:checked + .side-menu {
+  transform: translateX(0);
+}
+
+nav {
+  letter-spacing: 1.5px;
+}
+
+nav .side-select {
+  font-size: 1.2rem;
+  /* a標籤屬於inline */
+  /* 所以display: block;變成一欄 */
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+nav .side-select .fa {
+  /* 縮放0倍,消失 */
+  transform: scale(0);
+  transition: 0.3s all linear;
+  /* 起始點往左推 */
+  margin-right: -1.1rem;
+}
+nav .side-select:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+nav .side-select:hover .fa {
+  /* 滑鼠碰到之後歸0 */
+  margin-right: 0rem;
+  /* 並放大1倍(跟原圖一樣) */
+  transform: scale(1);
+}
+
+a {
+  /* 底線消失 */
+  text-decoration: none;
+}
+
+.fa-angles-right {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.nav-bar {
+  padding-top: 10px;
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
+  /* 置中*/
+  @include flexGroup(row, space-around, $alignItems: true);
+}
+
+.nav-bar > .sign-in,
+.logo {
+  font-weight: bold;
+  transition: all 0.3s ease-in-out; // 退出動畫
+  font-size: 1.5rem;
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    color: #a80202da;
+    cursor: pointer;
+  }
+}
+
+// ---------------------------- 以下 TOP搜尋列
+
+.top-search-wrapper {
+  max-width: 450px;
+  width: 160%;
+  height: 40px; // search高度
+  margin-left: -30%;
+  // margin: 150px auto;
+}
+.top-search-wrapper > .search-input {
+  // background:transparent;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.12);
+}
+.search-input > .top-input-text {
+  background-color: transparent;
+  // height: 55px;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  // border: none;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  transition: all 0.1s ease-in-out;
+  &:focus {
+    transition: all 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+//class 有search-input 及 active 時，下top-input-text
+.search-input.active .top-input-text {
+  border-radius: 5px 5px 0 0;
+}
+
+// 選單顯示方式
+.search-input > .autocom-box {
+  background-color: rgba(255, 255, 255, 0.432);
+  transition: all 0.2s ease-in-out; // 退出動畫
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+//class 有search-input 及 active 時，下autocom-box
+.search-input.active .autocom-box {
+  transition: all 0.2s ease-in-out; // 進入動畫
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.autocom-box li {
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+
+//class 有search-input 及 active 時，下autocom-box li
+.search-input.active .autocom-box li {
+  display: block;
+}
+.autocom-box > li:hover {
+  background: #000000;
+}
+.search-input > .icon {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  height: 40px;
+  line-height: 40px;
+  width: 55px;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+// ------------------------------
+
+.slideshow {
+  @include flexGroup(row, space-around, $alignItems: true);
+  @include backgroundImageStyle(scroll, $notRepeat: false);
+  background-image: url("../image/BigHero6/BigHero6-1.jpg");
+  // background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), url("../image/fly-2.jpg");
+  color: rgb(255, 255, 255);
+  height: 95vh;
+  margin-top: -8%; // 讓背景圖吃到nav-bar
+  transition: all 0.5s ease-in-out; // 縮放動畫
+}
+
+.slideshow > .slideshow-left-detail {
+  transition: all 0.5s ease-in-out; // 縮放動畫
+  flex-grow: 3;
+  @include flexGroup(column, flex-start, $alignItems: true);
+  width: 15vh;
+  // border: 1px solid black;
+  // height: 50vh;
+  background-color: #546377be;
+  border-radius: 20px;
+  margin-left: 5%;
+  letter-spacing: 3px;
+  margin-top: 7%;
+}
+
+.slideshow-left-detail > .slideshow-context-title {
+  margin: 1%;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+.slideshow-left-detail > .slideshow-context-like {
+  margin: 1%;
+  font-size: 0.5rem;
+}
+
+.slideshow-left-detail > .slideshow-context-introduce {
+  margin: 3%;
+  font-size: 1rem;
+}
+.slideshow-left-detail > .slideshow-context-more {
+  margin: 3%;
+  font-size: 1rem;
+}
+.slideshow-context-more > .slideshow-context-button {
+  letter-spacing: 1.6px;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 40px;
+  background-color: rgb(168, 2, 2);
+  transition: all 0.3s ease-in-out; // 退出動畫
+  &:hover {
+    background-color: red;
+    transition: all 0.2s ease-in-out; // 進入動畫
+    cursor: pointer;
+  }
+}
+
+.slideshow > .slideshow-context {
+  flex-grow: 4;
+  @include flexGroup(column, space-evenly, $alignItems: true);
+  height: 30vh;
+}
+
+.slideshow > .slideshow-right-button {
+  flex-grow: 3;
+  @include flexGroup(column, space-evenly, $alignItems: false);
+  align-items: flex-end;
+  height: 30vh;
+}
+
+.slideshow-right-button > .slideshow-background-button {
+  border: none;
+  padding: 1%;
+  margin-right: 1%;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.562);
+  &:hover {
+    border-radius: 20px;
+    // background-color: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+  &.active {
+    border-radius: 20px;
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+.show-youtube-outside {
+  @include backgroundImageStyle(scroll, $notRepeat: true);
+  background-image: linear-gradient(rgba(85, 85, 85, 0.3)),
+    url("../image/BigHero6/BigHero6-video-bg.jpg");
+  // background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), url("../image/fly-2.jpg");
+  text-align: center;
+}
+
+.show-youtube-outside > .show-youtube {
+  margin: 50px auto 50px auto;
+  width: 80%;
+  // height: 100%;
+  height: 300px;
+}
+
+.featured-movie {
+  @include flexGroup(column, space-around, $alignItems: true);
+  width: 100%;
+  height: 180vh;
+}
+
+.featured-movie > .featured-movie-inside-width {
+  transition: 0.3s all linear; // 動畫顯示
+  flex-grow: 2.5;
+  width: 80%;
+  // border: 1px solid black;
+  color: #fff;
+  background-color: #b86f6f;
+}
+
+.featured-movie-inside-width > .featured-movie-inside-context {
+  @include flexGroup(column, space-around, $alignItems: false);
+  margin-left: 10%;
+  // border: 1px solid black;
+  width: 50%;
+  height: 100%;
+  letter-spacing: 2.5px;
+  background-color: #54637752;
+  padding: 10px;
+  // margin: 0 200px;
+}
+
+.featured-movie-inside-context > .featured-movie-introduce {
+  height: 50px;
+  // padding: 3%;
+}
+
+.featured-movie-introduce > .featured-movie-introduce-p {
+  @include lineClamp(4);
+}
+
+.featured-bg1 {
+  @include backgroundImageStyle(scroll, $notRepeat: true);
+  background-image: url("../image/InsideOut-featured-movie.jpg");
+}
+
+.featured-bg2 {
+  @include backgroundImageStyle(scroll, $notRepeat: true);
+  background-image: url("../image/Logan-featured-movie.jpg");
+}
+
+.featured-bg3 {
+  @include backgroundImageStyle(scroll, $notRepeat: true);
+  background-image: url("../image/Soul-featured-movie.jpg");
+}
+
+.featured-bg4 {
+  @include backgroundImageStyle(scroll, $notRepeat: true);
+  background-image: url("../image/BigHero6-featured-movie.jpg");
+}
+
+.featured-movie-inside-context > .featured-movie-like {
+  // margin: 1%;
+  color: red;
+  font-size: 1rem;
+}
+
+.featured-movie-inside-context > .featured-movie-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.featured-movie-inside-context > .featured-movie-more {
+  margin: 10% 5% 3% 5%;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.featured-movie-more > .featured-movie-button {
+  letter-spacing: 1.6px;
+  color: #fff;
+  border: none;
+  margin-top: 1%;
+  padding: 2%;
+  border-radius: 40px;
+  background-color: rgb(168, 2, 2);
+  transition: all 0.3s ease-in-out; // 退出動畫
+  &:hover {
+    background-color: red;
+    transition: all 0.2s ease-in-out; // 進入動畫
+    cursor: pointer;
+  }
+}
+
+.featured-movie-button > a {
+  color: #fff;
+}
+
+.actor-title {
+  @include flexGroup(row, center, $alignItems: true);
+  letter-spacing: 3px;
+  font-size: 3rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.664);
+  color: #fff;
+  // -webkit-text-stroke: 1px #000; //字邊框
+}
+
+.actor-context-photo {
+  @include flexGroup(row, space-around, $alignItems: true);
+  height: 50vh;
+  padding: 0px 10% 0px 10%;
+}
+
+.actor-context-photo > .actor-photo-1,
+.actor-photo-2,
+.actor-photo-3,
+.actor-photo-4 {
+  margin-bottom: -5%;
+  width: 20%;
+  height: 80%;
+  border: 1px solid black;
+  background-color: rgb(197, 47, 47);
+}
+
+// ---------------------------------- 改一樣????
+
+.actor-photo-1 > img {
+  @include imgFit(cover);
+}
+
+.actor-photo-2 > img {
+  @include imgFit(cover);
+}
+
+.actor-photo-3 > img {
+  @include imgFit(cover);
+}
+
+.actor-photo-4 > img {
+  @include imgFit(cover);
+}
+
+.actor-context-name {
+  @include flexGroup(row, space-around, $alignItems: true);
+  height: 10vh;
+  // background-color: #3d3d3d54;
+  color: #fff;
+  padding: 0px 10% 0px 10%;
+  letter-spacing: 1.2px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.actor-context-name > .actor-name-1,
+.actor-name-2,
+.actor-name-3,
+.actor-name-4 {
+  width: 20%;
+  height: 35%;
+  text-align: center;
+  // border: 1px solid black;
+  margin-bottom: 50px;
+}
+
+footer {
+  @include flexGroup(column, space-evenly, $alignItems: true);
+  border: 1px solid rgba(0, 0, 0, 0.555);
+  background-color: #3842c733;
+  width: 100%;
+  height: 25vh;
+  color: #fff;
+}
+
+footer > .go-top > a {
+  color: #fff;
+}
+
+footer > .go-top {
+  // border: 1px solid black;
+  align-self: flex-end;
+  margin-right: 10%;
+  align-items: center;
+  border-radius: 50%;
+  margin-top: 10px;
+  padding: 20px;
+  font-weight: bold;
+  background-color: rgb(168, 2, 2);
+  transition: all 0.3s ease-in-out; // 退出動畫
+  &:hover {
+    background-color: red;
+    transition: all 0.2s ease-in-out; // 進入動畫
+    cursor: pointer;
+  }
+}
+
+footer > .footer-socials {
+  @include flexGroup(row, space-evenly, $alignItems: false);
+  width: 50%;
+  letter-spacing: 1px;
+  font-size: 3rem;
+}
+
+footer > .footer-socials a {
+  color: #fff;
+}
+
+footer > .footer-socials a {
+  &:hover {
+    position: relative; /* 當滑鼠經過超連結時，超連結往右下位移2像素 */
+    top: 3px;
+    left: 3px;
+    color: rgb(0, 0, 0);
+  }
+}
+
+footer > .footer-context,
+.footer-right {
+  @include flexGroup(row, space-evenly, $alignItems: false);
+  width: 50%;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin-left: -3%;
+}
+
+/* 最小700最大1000 平板 */
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  body {
+  }
+  .logo {
+    margin-left: 8%;
+  }
+
+  .top-search-wrapper {
+    width: 100%;
+    height: 40px; // search高度
+    margin-left: 1%;
+  }
+
+  .side-menu {
+    width: 30%;
+    margin-left: -1px;
+  }
+
+  .slideshow > .slideshow-left-detail {
+    padding: 1%;
+  }
+
+  .slideshow-left-detail > .slideshow-context-like {
+    color: red;
+  }
+
+  .slideshow-context-introduce {
+    height: 15%;
+    padding: auto 2%;
+  }
+
+  .slideshow-context-introduce > .slideshow-context-p {
+    @include lineClamp(11);
+  }
+
+  .featured-movie {
+    height: 200vh;
+  }
+
+  .featured-movie > .featured-movie-inside-width {
+    width: 100%;
+  }
+
+  .featured-movie-introduce > .featured-movie-introduce-p {
+    -webkit-line-clamp: 4;
+  }
+
+  .actor-title {
+    font-size: 2rem;
+  }
+
+  .actor-context-photo {
+    height: 60vh;
+    @include flexGroup(row, center, $alignItems: true);
+    padding: 5% 10% 0 10%;
+    flex-wrap: wrap;
+    // 換行不擠壓
+    align-content: flex-start;
+  }
+
+  .actor-context-photo > .actor-photo-1,
+  .actor-photo-2,
+  .actor-photo-3,
+  .actor-photo-4 {
+    width: 45%;
+    height: 40%;
+    border: 1px solid black;
+    margin: 2%;
+  }
+
+  .actor-context-name {
+    display: none;
+  }
+
+  footer > .footer-socials {
+    font-size: 2rem;
+  }
+
+  footer > .footer-context {
+    width: 90%;
+    margin-left: -10%;
+  }
+
+  footer > .footer-right {
+    font-size: 0.5rem;
+  }
+}
+
+/* 最大 320  手機 */
+@media only screen and (max-width: 320px) {
+  body {
+    background-color: #36e600;
+  }
+
+  .nav-bar {
+    display: none;
+  }
+
+  nav {
+    letter-spacing: 1px;
+    margin-left: -8%;
+  }
+
+  .side-menu {
+    width: 80%;
+    align-items: center;
+  }
+
+  nav .side-select .fa {
+    transform: scale(1);
+    margin-right: 0px;
+  }
+
+  .slideshow {
+    margin-top: 0%; // 恢復
+    height: 100vh;
+    background-position: top;
+    background-size: cover;
+  }
+
+  .slideshow > .slideshow-context {
+    display: none;
+  }
+
+  .slideshow > .slideshow-left-detail {
+    align-self: flex-end;
+    width: 55vh;
+    margin: 10%;
+    height: 53vh;
+    margin-left: 50px;
+  }
+
+  .slideshow-left-detail > .slideshow-context-title {
+    font-size: 2rem;
+    padding: 2%;
+  }
+
+  .slideshow-left-detail > .slideshow-context-like {
+    margin: -2%;
+    font-size: 8px;
+    color: red;
+  }
+
+  .slideshow-context-introduce {
+    height: 100px;
+    padding: 4%;
+  }
+  .slideshow-context-introduce > .slideshow-context-p {
+    @include lineClamp(4);
+  }
+
+  .slideshow-context-more > .slideshow-context-button {
+  }
+
+  .slideshow > .slideshow-right-button {
+    display: none;
+  }
+
+  .featured-movie {
+    height: 280vh;
+  }
+
+  .featured-movie > .featured-movie-inside-width {
+    // margin: auto 10px;
+  }
+
+  .featured-movie-inside-width > .featured-movie-inside-context {
+    // align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
+
+  .featured-movie-inside-context > .featured-movie-like {
+    color: yellow;
+    font-size: 0.5rem;
+    flex-grow: 0.1;
+  }
+
+  .featured-movie-inside-context > .featured-movie-title {
+    font-size: 2rem;
+    flex-grow: 0.9;
+  }
+
+  .featured-movie-inside-context > .featured-movie-introduce {
+    flex-grow: 6;
+  }
+
+  .featured-movie-introduce > .featured-movie-introduce-p {
+    -webkit-line-clamp: 7;
+  }
+
+  .featured-movie-inside-context > .featured-movie-watchmore {
+    flex-grow: 4;
+  }
+
+  .show-youtube-outside > .show-youtube {
+    margin: auto auto -10px auto;
+    width: 100%;
+  }
+
+  .actor-title {
+    display: none;
+  }
+
+  .actor-context-photo {
+    height: 140vh;
+  }
+
+  .actor-context-photo > .actor-photo-1,
+  .actor-photo-2,
+  .actor-photo-3,
+  .actor-photo-4 {
+    width: 80%;
+    height: 23%;
+    border: 1px solid black;
+    text-align: center;
+  }
+
+  footer > .go-top {
+    padding: 5px;
+    position: fixed;
+    bottom: 10px;
+    margin-right: 5px;
+  }
+
+  footer {
+    height: 50vh;
+  }
+
+  footer > .footer-socials {
+    @include flexGroup(row, space-evenly, $alignItems: false);
+    // border: 1px solid black;
+    width: 100%;
+    font-size: 2rem;
+  }
+
+  footer > .footer-context {
+    @include flexGroup(column, space-evenly, $alignItems: true);
+    margin: 0%;
+  }
+
+  footer > .footer-right {
+    @include flexGroup(row, flex-start, $alignItems: false);
+    width: 100%;
+    font-size: 0.5rem;
+    margin: 0%;
+  }
+}
